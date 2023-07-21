@@ -7,6 +7,7 @@ import {
   // ClaimType,
   SismoConnectResponse,
 } from "@sismo-core/sismo-connect-react"
+import useFeed from "../hooks/useFeed"
 
 const config: SismoConnectConfig = {
   appId: "0xafabec94b12842146d5f06acaac25ccd",

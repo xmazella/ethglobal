@@ -1,4 +1,6 @@
 import { styled } from "styled-components"
+import useFeed from "../hooks/useFeed"
+import { useEffect } from "react"
 
 const HomeContainer = styled.div`
   display: flex;
@@ -30,6 +32,9 @@ const Tweet = styled.div`
 `
 
 const Home: React.FC<{}> = () => {
+  const { data, isLoading, error } = useFeed()
+  useEffect(() => console.debug(data), [data])
+
   return (
     <HomeContainer>
       <Column>
