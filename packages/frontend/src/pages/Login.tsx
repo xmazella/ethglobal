@@ -1,11 +1,8 @@
-"use client"
-
-import Link from "next/link"
 import {
   SismoConnectButton,
   SismoConnectConfig,
   AuthType,
-  ClaimType,
+  // ClaimType,
   SismoConnectResponse,
 } from "@sismo-core/sismo-connect-react"
 import { useState } from "react"
@@ -38,7 +35,7 @@ export default function Login() {
 
   return (
     <main>
-      <Link href="/">Accueil</Link>
+      <a href="/">Accueil</a>
       {proofs ? (
         <Success proofs={proofs} />
       ) : (

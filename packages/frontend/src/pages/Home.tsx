@@ -1,10 +1,9 @@
-"use client";
-import { styled } from "styled-components";
+import { styled } from "styled-components"
 
 const HomeContainer = styled.div`
   display: flex;
   min-width: 100vw;
-`;
+`
 
 const Column = styled.div`
   display: flex;
@@ -12,7 +11,7 @@ const Column = styled.div`
   align-items: center;
   width: 50%;
   gap: 36px;
-`;
+`
 
 const Card = styled.div`
   display: flex;
@@ -22,13 +21,13 @@ const Card = styled.div`
   min-height: 200px;
   min-width: 400px;
   background: green;
-`;
+`
 
 const Tweet = styled.div`
   min-height: 100px;
   width: 100%;
   background: white;
-`;
+`
 
 const Home: React.FC<{}> = () => {
   return (
@@ -48,7 +47,7 @@ const Home: React.FC<{}> = () => {
         <Card>Account Settings</Card>
       </Column>
     </HomeContainer>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
