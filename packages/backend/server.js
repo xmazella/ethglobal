@@ -18,7 +18,6 @@ app.post('/connect', (req, res) => {
   }
 });
 
-// POST route for /connect
 app.post('/post', (req, res) => {
   // Check if the JSON object has the 'sismo_proof' property
   if (req.body && req.body.sismo_proof) {
@@ -30,7 +29,6 @@ app.post('/post', (req, res) => {
   }
 });
 
-// POST route for /connect
 app.post('/collect', (req, res) => {
   // Check if the JSON object has the 'sismo_proof' property
   if (req.body && req.body.sismo_proof) {
@@ -42,7 +40,6 @@ app.post('/collect', (req, res) => {
   }
 });
 
-// POST route for /connect
 app.post('/mirror', (req, res) => {
   // Check if the JSON object has the 'sismo_proof' property
   if (req.body && req.body.sismo_proof) {
@@ -54,7 +51,6 @@ app.post('/mirror', (req, res) => {
   }
 });
 
-// POST route for /connect
 app.post('/comment', (req, res) => {
   // Check if the JSON object has the 'sismo_proof' property
   if (req.body && req.body.sismo_proof) {
@@ -66,7 +62,6 @@ app.post('/comment', (req, res) => {
   }
 });
 
-// POST route for /connect
 app.post('/quote', (req, res) => {
   // Check if the JSON object has the 'sismo_proof' property
   if (req.body && req.body.sismo_proof) {
