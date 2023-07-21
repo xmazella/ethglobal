@@ -1,3 +1,5 @@
+import { useState } from "react"
+import { Link } from "react-router-dom"
 import {
   SismoConnectButton,
   SismoConnectConfig,
@@ -5,7 +7,6 @@ import {
   // ClaimType,
   SismoConnectResponse,
 } from "@sismo-core/sismo-connect-react"
-import { useState } from "react"
 
 const config: SismoConnectConfig = {
   appId: "0xafabec94b12842146d5f06acaac25ccd",
@@ -35,7 +36,8 @@ export default function Login() {
 
   return (
     <main>
-      <a href="/">Accueil</a>
+      <Link to="/">Accueil</Link>
+      <br />
       {proofs ? (
         <Success proofs={proofs} />
       ) : (
