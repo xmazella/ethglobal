@@ -1,6 +1,5 @@
 import { styled } from "styled-components"
 import useFeed from "../hooks/useFeed"
-import { useEffect } from "react"
 
 const HomeContainer = styled.div`
   display: flex;
@@ -32,18 +31,12 @@ const Tweet = styled.div`
 `
 
 const Home: React.FC<{}> = () => {
-  const { data, isLoading, error } = useFeed()
-  useEffect(() => console.debug(data), [data])
-
   return (
     <HomeContainer>
       <Column>
         <Card>Block Post</Card>
         <Card>
-          <Tweet>1</Tweet>
-          <Tweet>2</Tweet>
-          <Tweet>3</Tweet>
-          <Tweet>4</Tweet>
+          <FeedItems />
         </Card>
       </Column>
       <Column>
@@ -52,6 +45,21 @@ const Home: React.FC<{}> = () => {
         <Card>Account Settings</Card>
       </Column>
     </HomeContainer>
+  )
+}
+
+const FeedItems: React.FC = () => {
+  const { data, isLoading, error } = useFeed()
+
+  if (isLoading) return <>Chargement...</>
+  if (error) return <>Oups c'est cassé 🥲</>
+
+  return (
+    <>
+      {data?.items.map(i => (
+        <Tweet>{i.root.metadata.content}</Tweet>
+      ))}
+    </>
   )
 }
 

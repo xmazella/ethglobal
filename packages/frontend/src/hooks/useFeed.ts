@@ -21,8 +21,8 @@ function useFeed() {
       setApi({ isLoading: true, data: undefined, error: undefined })
       try {
         const data = await (await fetch("http://127.0.0.1:3000/feed")).json()
-        setApi({ data: data.value.items, error: undefined, isLoading: false })
-        console.debug(`useFeed() > `, JSON.stringify(data, null, 2))
+        setApi({ data: data.data.value, error: undefined, isLoading: false })
+        console.debug(`useFeed() > `, data.data.value)
       } catch (error) {
         setApi({ data: undefined, error, isLoading: false })
         console.error(`useFeed() > `, error)
