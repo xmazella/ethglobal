@@ -24,8 +24,8 @@ const Flex1 = styled.div`
 
 const Logo = styled.div`
   flex: 3;
-  color: #fff;
-  font-family: Inter;
+  color: #bcf8f4;
+  font-family: Orbitron;
   font-size: 34px;
   font-style: normal;
   font-weight: 800;
@@ -37,6 +37,7 @@ const Content = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 `;
 
 const Menu = styled.div`
@@ -48,8 +49,8 @@ const Menu = styled.div`
 
 const Profile = styled.div`
   display: flex;
-  position: relative;
-  flex: 1;
+  position: absolute;
+  width: 100%;
   align-items: center;
   gap: 32px;
 `;
@@ -58,8 +59,9 @@ const Company = styled.div`
   position: absolute;
   left: 150px;
   flex-shrink: 0;
-  color: #fff;
-  font-family: Inter;
+  color: #bcf8f4;
+  font-family: Orbitron;
+
   font-size: 28px;
   font-style: normal;
   font-weight: 800;
@@ -97,7 +99,7 @@ const Header: React.FC<{}> = () => {
     <HeaderContainer>
       <LogoContainer>
         <Flex1></Flex1>
-        <Logo>ETHGLOBAL</Logo>
+        <Logo>ETH GLOBAL</Logo>
         <Logout>Log out</Logout>
       </LogoContainer>
       <Content>
@@ -105,6 +107,7 @@ const Header: React.FC<{}> = () => {
           <img src={graphicUser} />
           <Company>COMPANY NAME</Company>
         </Profile>
+        <Flex1></Flex1>
         <Menu>
           <img src={lensLogo} />
           <img src={twitterLogo} />

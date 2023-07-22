@@ -22,7 +22,7 @@ export const CardContainer = styled(Column)`
 `;
 
 const Title = styled.div`
-  color: var(--text-icons, #bcf8f4);
+  color: #bcf8f4;
   font-family: Orbitron;
   font-size: 24px;
   font-style: normal;
