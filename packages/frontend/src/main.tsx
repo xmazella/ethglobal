@@ -11,7 +11,7 @@ import Footer from "./components/Footer.tsx";
 const MainContainer = styled.div`
   background: linear-gradient(180deg, #131e1d 0%, #203635 100%);
   padding: 20px 40px 0 40px;
-  height: 100vh;
+  min-height: calc(100vh - 20px);
   margin: 0;
 `;
 

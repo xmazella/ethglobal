@@ -17,8 +17,11 @@ export const CardContainer = styled(Column)`
   );
   stroke-width: 1px;
   stroke: var(--text-icons, #b7fffa);
-  overflow: scroll;
   border: 1px solid #b7fffa;
+`;
+
+const OverflowContainer = styled.div`
+  overflow: scroll;
 `;
 
 const Title = styled.div`
@@ -35,20 +38,52 @@ const CustomRow = styled(Row)`
   justify-content: space-between;
 `;
 
+const Angle = styled.div<{
+  tricksColor?: string;
+}>`
+  position: absolute;
+  rotate: 45deg;
+  background: ${(props) => props.tricksColor};
+
+  width: 39px;
+  height: 36px;
+  content: "";
+`;
+
+const TopAngle = styled(Angle)`
+  top: -20px;
+  left: -22px;
+  border-right: 1px #b7fffa solid;
+`;
+
+const BottomAngle = styled(Angle)`
+  bottom: -20px;
+  right: -22px;
+  border-left: 1px #b7fffa solid;
+`;
+
 type CardProps = {
   title?: string;
+  tricksColorTop: string;
+  tricksColorBottom: string;
   children: JSX.Element;
 };
 
-const Card: React.FC<CardProps> = ({ children, title }) => {
+const Card: React.FC<CardProps> = ({
+  children,
+  title,
+  tricksColorTop,
+  tricksColorBottom,
+}) => {
   return (
     <CardContainer>
+      <TopAngle tricksColor={tricksColorTop} />
       <CustomRow>
         {title && <Title>{title}</Title>}
         <img src={graphicCardHeader} />
       </CustomRow>
-
-      {children}
+      <OverflowContainer>{children}</OverflowContainer>
+      <BottomAngle tricksColor={tricksColorBottom} />
     </CardContainer>
   );
 };
