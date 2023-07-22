@@ -1,15 +1,16 @@
-import { styled } from "styled-components"
-import { MediaSetFragment } from "@lens-protocol/client"
-import axios from "axios"
+import { styled } from "styled-components";
+import { MediaSetFragment } from "@lens-protocol/client";
+import axios from "axios";
+import { JsonRpcProvider } from "@ethersproject/providers";
 
 export const Row = styled.div`
   display: flex;
-`
+`;
 
 export const Column = styled.div`
   display: flex;
   flex-direction: column;
-`
+`;
 
 export const Text = styled.div`
   color: #b7fffa;
@@ -25,20 +26,27 @@ export const isMediaSetFragment = (
   picture:
     | MediaSetFragment
     | {
-        __typename: "NftImage"
-        contractAddress: string
-        tokenId: string
-        uri: string
-        verified: boolean
+        __typename: "NftImage";
+        contractAddress: string;
+        tokenId: string;
+        uri: string;
+        verified: boolean;
       }
     | null
 ): picture is MediaSetFragment => {
-  return (picture as MediaSetFragment).original !== undefined
-}
+  return (picture as MediaSetFragment).original !== undefined;
+};
+
+export const getOwnerName = async (address: string) => {
+  const provider = new JsonRpcProvider(
+    "https://rpc.ankr.com/polygon_mumbai/ced3a36694bbbf325858059c2c58398caee6d90a6638e38a3e967695be017a13"
+  );
+  return await provider.lookupAddress(address);
+};
 
 export const sanitizeDStorageUrl = (url: string) => {
-  const ipfsGateway = `https://w3s.link/ipfs/`
-  const arweaveGateway = `arweave.net/`
+  const ipfsGateway = `https://w3s.link/ipfs/`;
+  const arweaveGateway = `arweave.net/`;
 
   return url
     .replace(/^Qm[1-9A-Za-z]{44}/gm, `${ipfsGateway}/${url}`)
@@ -46,9 +54,9 @@ export const sanitizeDStorageUrl = (url: string) => {
     .replace("https://ipfs.infura.io/ipfs", ipfsGateway)
     .replace("ipfs://", ipfsGateway)
     .replace("ipfs://ipfs/", ipfsGateway)
-    .replace("ar://", arweaveGateway)
-}
+    .replace("ar://", arweaveGateway);
+};
 
 export function createPost(body: string) {
-  return axios.post("http://localhost:3000/postOnLens", { content: body })
+  return axios.post("http://localhost:3000/postOnLens", { content: body });
 }
