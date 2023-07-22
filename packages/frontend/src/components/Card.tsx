@@ -1,11 +1,24 @@
 import React from "react";
 import { styled } from "styled-components";
-import { Column } from "./Tools";
+import { Column, Row } from "./Tools";
+
+import graphicCardHeader from "../assets/svgs/graphicCardHeader.svg";
 
 export const CardContainer = styled(Column)`
-  min-height: 200px;
-  width: 100%;
-  background: #b9b9b9;
+  position: relative;
+  min-height: 150px;
+  max-height: 400px;
+  width: calc(100% - 48px);
+  padding: 20px 24px;
+  background: linear-gradient(
+    180deg,
+    rgba(65, 100, 98, 0.5) 0%,
+    rgba(106, 177, 173, 0.5) 100%
+  );
+  stroke-width: 1px;
+  stroke: var(--text-icons, #b7fffa);
+  overflow: scroll;
+  border: 1px solid #b7fffa;
 `;
 
 const Title = styled.div`
@@ -18,6 +31,10 @@ const Title = styled.div`
   letter-spacing: 1.2px;
 `;
 
+const CustomRow = styled(Row)`
+  justify-content: space-between;
+`;
+
 type CardProps = {
   title?: string;
   children: JSX.Element;
@@ -26,7 +43,11 @@ type CardProps = {
 const Card: React.FC<CardProps> = ({ children, title }) => {
   return (
     <CardContainer>
-      {title && <Title>{title}</Title>}
+      <CustomRow>
+        {title && <Title>{title}</Title>}
+        <img src={graphicCardHeader} />
+      </CustomRow>
+
       {children}
     </CardContainer>
   );

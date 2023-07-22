@@ -6,10 +6,12 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home.tsx";
 import Login from "./pages/Login.tsx";
 import Header from "./components/Header.tsx";
+import Footer from "./components/Footer.tsx";
 
 const MainContainer = styled.div`
-  background: #2e2e2e;
+  background: linear-gradient(180deg, #131e1d 0%, #203635 100%);
   padding: 20px 40px 0 40px;
+  height: 100vh;
   margin: 0;
 `;
 
@@ -29,6 +31,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
       <Header />
       <RouterProvider router={router} />
+      <Footer />
     </React.StrictMode>
   </MainContainer>
 );

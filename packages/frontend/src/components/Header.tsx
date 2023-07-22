@@ -1,9 +1,11 @@
 "use client";
 
 import { styled } from "styled-components";
+import graphicUser from "../assets/svgs/graphicUser.svg";
 import lensLogo from "../assets/svgs/lensLogo.svg";
 import twitterLogo from "../assets/svgs/twitterLogo.svg";
 import notificationLogo from "../assets/svgs/notificationLogo.svg";
+import { Text } from "./Tools";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -46,12 +48,16 @@ const Menu = styled.div`
 
 const Profile = styled.div`
   display: flex;
+  position: relative;
   flex: 1;
   align-items: center;
   gap: 32px;
 `;
 
 const Company = styled.div`
+  position: absolute;
+  left: 150px;
+  flex-shrink: 0;
   color: #fff;
   font-family: Inter;
   font-size: 28px;
@@ -69,17 +75,14 @@ const Circle = styled.div`
   content: "";
 `;
 
-const Logout = styled.div`
+const Logout = styled(Text)`
   display: flex;
   justify-content: flex-end;
   flex: 1;
 
-  color: #fff;
-  font-family: Inter;
   font-size: 18px;
-  font-style: normal;
   font-weight: 500;
-  line-height: normal;
+  letter-spacing: 0.36px;
   text-decoration-line: underline;
 `;
 
@@ -99,7 +102,7 @@ const Header: React.FC<{}> = () => {
       </LogoContainer>
       <Content>
         <Profile>
-          <Circle />
+          <img src={graphicUser} />
           <Company>COMPANY NAME</Company>
         </Profile>
         <Menu>

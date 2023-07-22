@@ -11,6 +11,16 @@ export const Column = styled.div`
   flex-direction: column;
 `
 
+export const Text = styled.div`
+  color: #b7fffa;
+  font-family: Prompt;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.24px;
+`;
+
 export const isMediaSetFragment = (
   picture:
     | MediaSetFragment
