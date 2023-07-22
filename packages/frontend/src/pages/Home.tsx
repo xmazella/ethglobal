@@ -51,6 +51,7 @@ const Home: React.FC<{}> = () => {
           tricksColorTop="#162423"
           tricksColorBottom="#1a2929"
         >
+          <></>
           <>
             {chat.isLoading && <p>Chargement... ⏳</p>}
             {!chat.isLoading &&
@@ -67,7 +68,6 @@ const Home: React.FC<{}> = () => {
               })}
           </>
         </Card>
-
         <Card
           title="Subscribers management"
           tricksColorTop="#1a2b2a"
