@@ -1,5 +1,7 @@
 import { styled } from "styled-components";
-import useFeed from "../hooks/useFeed";
+import { Column } from "../components/Tools";
+import LensFeed from "../components/LensFeed";
+import Card from "../components/Card";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -7,59 +9,35 @@ const HomeContainer = styled.div`
   gap: 32px;
 `;
 
-const Column = styled.div`
-  display: flex;
-  flex-direction: column;
+const HomeColumn = styled(Column)`
   align-items: center;
   width: 50%;
   gap: 36px;
 `;
 
-const Card = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 36px;
-  min-height: 200px;
-  width: 100%;
-  background: #b9b9b9;
-`;
-
-const Tweet = styled.div`
-  min-height: 100px;
-  width: 100%;
-  background: white;
-`;
-
 const Home: React.FC<{}> = () => {
   return (
     <HomeContainer>
-      <Column>
-        <Card>Block Post</Card>
-        <Card>
-          <FeedItems />
+      <HomeColumn>
+        <Card title="Block Post">
+          <></>
         </Card>
-      </Column>
-      <Column>
-        <Card>Message</Card>
-        <Card>Following / Sub</Card>
-        <Card>Account Settings</Card>
-      </Column>
+        <Card title="Feed">
+          <LensFeed />
+        </Card>
+      </HomeColumn>
+      <HomeColumn>
+        <Card title="Message">
+          <></>
+        </Card>
+        <Card title="Following / Sub">
+          <></>
+        </Card>
+        <Card title="Account Settings">
+          <></>
+        </Card>
+      </HomeColumn>
     </HomeContainer>
-  );
-};
-
-const FeedItems: React.FC = () => {
-  const { data, isLoading, error } = useFeed();
-
-  if (isLoading) return <>Chargement...</>;
-  if (error) return <>Oups c'est cassé 🥲</>;
-
-  return (
-    <>
-      {data?.items.map((i) => (
-        <Tweet>{i.root.metadata.content}</Tweet>
-      ))}
-    </>
   );
 };
 
