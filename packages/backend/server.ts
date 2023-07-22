@@ -20,6 +20,7 @@ import morgan from "morgan"
 import { Server } from "socket.io"
 import http from "http"
 import { initXmtp } from "./xmtp"
+import { login } from "./login"
 
 const app: Express = express()
 const server = http.createServer(app)
@@ -82,6 +83,7 @@ app.post("/quote", (req: Request, res: Response) => {
 
 app.get("/feed", getFeed)
 app.post("/postOnLens", postOnLens)
+app.post("/login", login)
 
 function handlePostRequest(req: Request, res: Response) {
   // Check if the JSON object has the 'sismo_proof' property

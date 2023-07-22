@@ -53,6 +53,17 @@ export async function initXmtp(socket: Socket) {
   }
 }
 
+export async function postMessage(socket: Socket) {
+  const { MUMBAI_RPC_URL, PRIVATE_KEY } = process.env
+
+  const provider = new ethers.providers.JsonRpcProvider(MUMBAI_RPC_URL || "")
+  const wallet = new ethers.Wallet(PRIVATE_KEY || "", provider)
+  const xmtp = await Client.create(wallet, { env: "production" })
+
+  // xmtp.conversations
+  // const allConversations = await xmtp.conversations.list()
+}
+
 // const conversation = await xmtp.conversations.newConversation(
 //   "0x3F11b27F323b62B159D2642964fa27C46C841897"
 // )
