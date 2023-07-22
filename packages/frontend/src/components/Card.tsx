@@ -39,11 +39,11 @@ const CustomRow = styled(Row)`
 `;
 
 const Angle = styled.div<{
-  tricksColor?: string;
+  trickscolor?: string;
 }>`
   position: absolute;
   rotate: 45deg;
-  background: ${(props) => props.tricksColor};
+  background: ${(props) => props.trickscolor};
 
   width: 39px;
   height: 36px;
@@ -77,13 +77,13 @@ const Card: React.FC<CardProps> = ({
 }) => {
   return (
     <CardContainer>
-      <TopAngle tricksColor={tricksColorTop} />
+      <TopAngle trickscolor={tricksColorTop} />
       <CustomRow>
         {title && <Title>{title}</Title>}
         <img src={graphicCardHeader} />
       </CustomRow>
       <OverflowContainer>{children}</OverflowContainer>
-      <BottomAngle tricksColor={tricksColorBottom} />
+      <BottomAngle trickscolor={tricksColorBottom} />
     </CardContainer>
   );
 };
