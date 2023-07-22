@@ -15,6 +15,7 @@ import {
 import { getFeed } from "./feed"
 import cors from "cors"
 import { postOnLens } from "./post"
+import invariant from "tiny-invariant"
 
 const app: Express = express()
 
@@ -70,7 +71,6 @@ app.post("/quote", (req: Request, res: Response) => {
 app.get("/feed", getFeed)
 app.post("/postOnLens", postOnLens)
 
-
 function handlePostRequest(req: Request, res: Response) {
   // Check if the JSON object has the 'sismo_proof' property
   if (req.body && req.body.sismo_proof) {
@@ -84,6 +84,13 @@ function handlePostRequest(req: Request, res: Response) {
         "Bad Request: 'sismo_proof' property is missing from the JSON object."
       )
   }
+}
+
+// Check if .env is set
+const error = (varName: string) =>
+  `No ${varName} found in env. Make sure you have a '.env' file set with PRIVATE KEY inside.`
+for (const envVar of ["PRIVATE_KEY", "MUMBAI_RPC_URL", "ETHERSCAN_API_KEY"]) {
+  invariant(process.env[envVar], error(envVar))
 }
 
 // Start the server
