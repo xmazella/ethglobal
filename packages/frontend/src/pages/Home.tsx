@@ -1,10 +1,11 @@
-import { styled } from "styled-components"
-import useFeed from "../hooks/useFeed"
+import { styled } from "styled-components";
+import useFeed from "../hooks/useFeed";
 
 const HomeContainer = styled.div`
   display: flex;
-  min-width: 100vw;
-`
+  padding-top: 62px;
+  gap: 32px;
+`;
 
 const Column = styled.div`
   display: flex;
@@ -12,23 +13,22 @@ const Column = styled.div`
   align-items: center;
   width: 50%;
   gap: 36px;
-`
+`;
 
 const Card = styled.div`
   display: flex;
   flex-direction: column;
   gap: 36px;
-  padding: 36px;
   min-height: 200px;
-  min-width: 400px;
-  background: green;
-`
+  width: 100%;
+  background: #b9b9b9;
+`;
 
 const Tweet = styled.div`
   min-height: 100px;
   width: 100%;
   background: white;
-`
+`;
 
 const Home: React.FC<{}> = () => {
   return (
@@ -45,22 +45,22 @@ const Home: React.FC<{}> = () => {
         <Card>Account Settings</Card>
       </Column>
     </HomeContainer>
-  )
-}
+  );
+};
 
 const FeedItems: React.FC = () => {
-  const { data, isLoading, error } = useFeed()
+  const { data, isLoading, error } = useFeed();
 
-  if (isLoading) return <>Chargement...</>
-  if (error) return <>Oups c'est cassé 🥲</>
+  if (isLoading) return <>Chargement...</>;
+  if (error) return <>Oups c'est cassé 🥲</>;
 
   return (
     <>
-      {data?.items.map(i => (
+      {data?.items.map((i) => (
         <Tweet>{i.root.metadata.content}</Tweet>
       ))}
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
