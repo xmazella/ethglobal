@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { MediaSetFragment } from "@lens-protocol/client";
 
 export const Row = styled.div`
   display: flex;
@@ -8,6 +9,21 @@ export const Column = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+export const isMediaSetFragment = (
+  picture:
+    | MediaSetFragment
+    | {
+        __typename: "NftImage";
+        contractAddress: string;
+        tokenId: string;
+        uri: string;
+        verified: boolean;
+      }
+    | null
+): picture is MediaSetFragment => {
+  return (picture as MediaSetFragment).original !== undefined;
+};
 
 export const sanitizeDStorageUrl = (url: string) => {
   const ipfsGateway = `https://w3s.link/ipfs/`;

@@ -19,7 +19,7 @@ const Home: React.FC<{}> = () => {
   return (
     <HomeContainer>
       <HomeColumn>
-        <Card title="Block Post">
+        <Card title="Create a post">
           <></>
         </Card>
         <Card title="Feed">
@@ -27,13 +27,13 @@ const Home: React.FC<{}> = () => {
         </Card>
       </HomeColumn>
       <HomeColumn>
-        <Card title="Message">
+        <Card title="Account settings">
           <></>
         </Card>
-        <Card title="Following / Sub">
+        <Card title="Subscribers management">
           <></>
         </Card>
-        <Card title="Account Settings">
+        <Card title="Account settings">
           <></>
         </Card>
       </HomeColumn>

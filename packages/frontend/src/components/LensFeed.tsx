@@ -4,13 +4,12 @@ import commentLogo from "../assets/svgs/commentLogo.svg";
 import hearthLogo from "../assets/svgs/hearthLogo.svg";
 import shareLogo from "../assets/svgs/shareLogo.svg";
 import collectLogo from "../assets/svgs/collectLogo.svg";
-import { Column, Row } from "./Tools";
+import { Column, Row, isMediaSetFragment } from "./Tools";
 import { styled } from "styled-components";
 
 const Tweet = styled.div`
   min-height: 100px;
   width: 100%;
-  background: white;
 `;
 
 const ImgProfile = styled.img`
@@ -28,10 +27,15 @@ const LensFeed: React.FC = () => {
     <>
       {data?.items.map((i) => {
         console.log(i.root);
+
+        const pfp = isMediaSetFragment(i.root.profile.picture)
+          ? i.root.profile.picture.original.url
+          : i.root.profile.picture?.uri;
+
         return (
           <Tweet key={i.root.id}>
             <Row>
-              <ImgProfile src={i.root.profile.picture.original.url} />
+              <ImgProfile src={pfp} />
               <Column>
                 <div>{i.root.profile.name}</div>
                 <Row>
