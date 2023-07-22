@@ -44,7 +44,9 @@ function useChat() {
 
     socket.on("message-received", (m: SimpleMessage) => {
       console.debug("a new message has been received", m)
-      const toUpdate = state.data?.find(c => c.peerAddress === m.senderAddress)
+      const toUpdate = state.data?.find(
+        c => c.peerAddress.toLowerCase() === m.senderAddress.toLowerCase()
+      )
       if (!toUpdate || !state.data) {
         return console.error("No conversation mathcing sender addr")
       }
