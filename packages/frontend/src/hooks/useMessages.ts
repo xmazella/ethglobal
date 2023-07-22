@@ -42,7 +42,7 @@ function useChat() {
     return () => {
       socket.removeAllListeners("init")
     }
-  })
+  }, [])
 
   useEffect(() => {
     socket.on("message-received", (m: SimpleMessage) => {
