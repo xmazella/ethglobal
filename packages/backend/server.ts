@@ -14,6 +14,7 @@ import {
 } from "@sismo-core/sismo-connect-server"
 import { getFeed } from "./feed"
 import cors from "cors"
+import { postOnLens } from "./post"
 
 const app: Express = express()
 
@@ -67,6 +68,8 @@ app.post("/quote", (req: Request, res: Response) => {
 })
 
 app.get("/feed", getFeed)
+app.post("/postOnLens", postOnLens)
+
 
 function handlePostRequest(req: Request, res: Response) {
   // Check if the JSON object has the 'sismo_proof' property

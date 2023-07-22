@@ -1,23 +1,22 @@
 import { Request, Response } from 'express';
-import { v4 as uuidv4 } from 'uuid';
 import { ethers } from 'ethers';
 import { LensClient, development } from "@lens-protocol/client";
-
 
 require('dotenv').config();
 
 const lensClient = new LensClient({
     environment: development
-  });
+});
 
-async function postOnLens(req: Request, res: Response) {
+export async function postOnLens(req: Request, res: Response) {
   if (req.method === "POST") {
 
-
-    const newName = `post-content-${uuidv4()}.json`;
+    // Make sure content is provided
+    if (!req.body || !req.body.content) {
+        return res.status(400).json({ error: "No content provided in request body." });
+    }
 
     const provider = new ethers.providers.JsonRpcProvider(process.env.MUMBAI_RPC_URL || '');
-
     const privateKey = process.env.PRIVATE_KEY;
     const wallet = new ethers.Wallet(privateKey || '', provider);
 
@@ -28,21 +27,44 @@ async function postOnLens(req: Request, res: Response) {
     const signature = await wallet.signMessage(challenge);
   
     await lensClient.authentication.authenticate(address, signature);
-    
-    const accessTokenResult = await lensClient.authentication.getAccessToken();
-    const accessToken = accessTokenResult.unwrap();
 
     //lens post
+    const profileId = "0x76c7";
 
-    const profileId = "";
-    const contentURI = "";
+    //todo post on arweave/ipfs
+    const contentURI =  "https://zruc54x6ffktxp4gmfvqrfuxtrbws2lvulg7zycohwbhpootj4xa.arweave.net/zGgu8v4pVTu_hmFrCJaXnENpaXWizfzgTj2Cd7nTTy4";    ;
+
+    const collectModule = {
+        simpleCollectModule: {
+          followerOnly: false,
+        }
+    };
 
     const createPostTypedDataResult = await lensClient.publication.createPostTypedData({
         profileId,
         contentURI,
-        collectModule:{},
+        collectModule,
       }
     );
+
+    const createPostTypedDataValue = createPostTypedDataResult.unwrap();
+
+    const signedTypedData = await wallet._signTypedData(
+        createPostTypedDataValue.typedData.domain,
+        createPostTypedDataValue.typedData.types,
+        createPostTypedDataValue.typedData.value,
+    );
+
+    console.log(`Broadcasting signed createDataAvailabilityPostTypedData...`);
+
+    const broadcastResult = await lensClient.transaction.broadcast({
+      id: createPostTypedDataValue.id,
+      signature: signedTypedData,
+    });
+
+    const broadcastValue = broadcastResult.unwrap();
+
+    console.log(`post was created: `, broadcastValue);
 
     res.status(200).json({ data: "done" })
   }
