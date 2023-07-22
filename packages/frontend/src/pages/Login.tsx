@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react"
 import {
   SismoConnectButton,
   SismoConnectConfig,
@@ -9,28 +8,10 @@ import {
 import { styled } from "styled-components"
 
 import { useNavigate } from "react-router-dom"
+import axios from "axios"
 
 const config: SismoConnectConfig = {
   appId: "0xafabec94b12842146d5f06acaac25ccd",
-  vault: {
-    // For development purposes insert the Data Sources that you want to impersonate
-    // Never use this in production
-    impersonate: [
-      // EVM Data Sources
-      // "dhadrien.sismo.eth",
-      // "leo21.sismo.eth",
-      // "0xA4C94A6091545e40fc9c3E0982AEc8942E282F38",
-      // "0x1b9424ed517f7700e7368e34a9743295a225d889",
-      // Github Data Source
-      // "github:lodig",
-      // Twitter Data Source
-      // "twitter:dhadrien_",
-      // Telegram Data Source
-      // "telegram:dhadrien",
-    ],
-  },
-  // displayRawResponse: true, // this enables you to get access directly to the
-  // Sismo Connect Response in the vault instead of redirecting back to the app
 }
 
 const Main = styled.main`
@@ -70,43 +51,45 @@ const SismoWrapper = styled.div`
   }
 `
 
+interface ApiResponse {
+  permissions: {
+    xmtp: boolean
+    postOnLens: boolean
+  }
+}
+
 export default function Login() {
-  const [proofs, setProofs] = useState<SismoConnectResponse["proofs"]>()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (proofs) {
-      localStorage.setItem("proofs", JSON.stringify(proofs))
+  const onSuccess = async (s: SismoConnectResponse) => {
+    try {
+      const { data } = await axios.post<ApiResponse>(
+        "http://localhost:3000/login",
+        s
+      )
+      console.debug(data)
+      localStorage.setItem("permissions", JSON.stringify(data.permissions))
+      localStorage.setItem("sismoConnectResponse", JSON.stringify(s))
       navigate("/")
+    } catch (e) {
+      console.error(e)
     }
-  }, [proofs])
+  }
 
   return (
     <Main>
       <Svg>
-        <Connect callback={r => setProofs(r.proofs)} />
+        <Connect callback={onSuccess} />
       </Svg>
     </Main>
   )
 }
 
-type ConnectProps = { callback: (res: SismoConnectResponse) => any }
+type ConnectProps = { callback: (res: SismoConnectResponse) => void }
 const Connect = (props: ConnectProps) => (
   <SismoWrapper>
     <SismoConnectButton
       config={config}
-      auths={
-        [
-          // Anonymous identifier of the vault for this app
-          // vaultId = hash(vaultSecret, appId).
-          // full docs: https://docs.sismo.io/sismo-docs/build-with-sismo-connect/technical-documentation/vault-and-proof-identifiers
-          // user is required to prove ownership of their vaultId for this appId
-          // { authType: AuthType.VAULT },
-          // { authType: AuthType.GITHUB },
-          // { authType: AuthType.TWITTER, isOptional: true },
-          // { authType: AuthType.TELEGRAM, userId: "875608110", isOptional: true },
-        ]
-      }
       claims={[
         { groupId: "0x75e135ba6f62b00a7ae194920ff8a665" }, // basique
         { groupId: "0x078b5d9514580634859c634c9f9dff4f", isOptional: true }, // xmtp
