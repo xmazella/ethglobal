@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   SismoConnectButton,
   SismoConnectConfig,
   // AuthType,
   // ClaimType,
   SismoConnectResponse,
-} from "@sismo-core/sismo-connect-react"
-import loginPage from "../assets/svgs/loginPage.svg";
+} from "@sismo-core/sismo-connect-react";
 import { styled } from "styled-components";
+
+import { useNavigate } from "react-router-dom";
 
 const config: SismoConnectConfig = {
   appId: "0xafabec94b12842146d5f06acaac25ccd",
@@ -33,27 +34,65 @@ const config: SismoConnectConfig = {
 };
 
 const Main = styled.main`
+  display: flex;
+  justify-content: center;
+  height: 100vh;
   background: linear-gradient(180deg, #131e1d 0%, #203635 100%);
+`;
+
+const Svg = styled.div`
+  width: 1400px;
+  height: 100%;
+  background-image: url(/src/assets/svgs/loginPage.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-origin: center;
+`;
+
+const SismoWrapper = styled.div`
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  .sismoConnectButton {
+    background: #b7fffa;
+  }
+
+  .sismoConnectButtonText {
+    color: #131d1d;
+    text-align: center;
+    font-family: Prompt;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.4px;
+  }
 `;
 
 export default function Login() {
   const [proofs, setProofs] = useState<SismoConnectResponse["proofs"]>();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (proofs) {
+      localStorage.setItem("proofs", JSON.stringify(proofs));
+      navigate("/");
+    }
+  }, [proofs]);
 
   return (
     <Main>
-      <img src={loginPage} />
-      {proofs ? (
-        <Success proofs={proofs} />
-      ) : (
+      <Svg>
         <Connect callback={(r) => setProofs(r.proofs)} />
-      )}
+      </Svg>
     </Main>
   );
 }
 
 type ConnectProps = { callback: (res: SismoConnectResponse) => any };
 const Connect = (props: ConnectProps) => (
-  <>
+  <SismoWrapper>
     <SismoConnectButton
       config={config}
       auths={
@@ -76,16 +115,5 @@ const Connect = (props: ConnectProps) => (
       signature={{ message: "Connect using sismo", isSelectableByUser: true }}
       onResponse={props.callback}
     />
-  </>
+  </SismoWrapper>
 );
-
-type SuccessProps = { proofs: any[] };
-const Success = (props: SuccessProps) => {
-  return (
-    <>
-      Vous êtes connecté 🎉
-      <br />
-      <pre>{JSON.stringify(props.proofs, null, 2)}</pre>
-    </>
-  );
-};
