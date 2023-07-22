@@ -25,7 +25,7 @@ const authenticating = authenticate();
 export async function getFeed(req: Request, res: Response) {
   await authenticating;
   const data = await lensClient.feed.fetch({
-    profileId: "0x8b39",
+    profileId: "0x76c7",
   });
 
   res.status(200).json({ data: data });
