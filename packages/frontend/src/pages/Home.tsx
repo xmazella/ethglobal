@@ -3,6 +3,7 @@ import { Column, createPost } from "../components/Tools"
 import LensFeed from "../components/LensFeed"
 import Card from "../components/Card"
 import { useState } from "react"
+import useChat from "../hooks/useMessages"
 
 const HomeContainer = styled.div`
   display: flex;
@@ -24,6 +25,9 @@ const Home: React.FC<{}> = () => {
     await createPost("// TODO")
     setIsLoading(false)
   }
+
+  const chat = useChat()
+
   return (
     <HomeContainer>
       <HomeColumn>
@@ -39,7 +43,7 @@ const Home: React.FC<{}> = () => {
       </HomeColumn>
       <HomeColumn>
         <Card title="Account settings">
-          <></>
+          <>{JSON.stringify(chat)}</>
         </Card>
         <Card title="Subscribers management">
           <></>

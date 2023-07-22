@@ -17,8 +17,17 @@ import cors from "cors"
 import { postOnLens } from "./post"
 import invariant from "tiny-invariant"
 import morgan from "morgan"
+import { Server } from "socket.io"
+import http from "http"
 
 const app: Express = express()
+const server = http.createServer(app)
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+})
 
 app.use(cors())
 app.use(morgan("dev"))
@@ -88,6 +97,12 @@ function handlePostRequest(req: Request, res: Response) {
   }
 }
 
+io.on("connection", socket => {
+  console.log("a user connected")
+})
+
+setInterval(() => io.emit("message-received"), 1000)
+
 // Check if .env is set
 const error = (varName: string) =>
   `No ${varName} found in env. Make sure you have a '.env' file set with PRIVATE KEY inside.`
@@ -97,6 +112,6 @@ for (const envVar of ["PRIVATE_KEY", "MUMBAI_RPC_URL", "ETHERSCAN_API_KEY"]) {
 
 // Start the server
 const port: number = 3000 // You can change this to any port number you want
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server is listening on port ${port}`)
 })
