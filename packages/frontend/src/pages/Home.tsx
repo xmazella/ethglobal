@@ -42,8 +42,22 @@ const Home: React.FC<{}> = () => {
         </Card>
       </HomeColumn>
       <HomeColumn>
-        <Card title="Account settings">
-          <>{JSON.stringify(chat)}</>
+        <Card title="Messages">
+          <>
+            {chat.isLoading && <p>Chargement... ⏳</p>}
+            {!chat.isLoading &&
+              // TODO: order by most recent conversation
+              chat.data?.map(conversation => {
+                const latestMessage =
+                  conversation.messages[conversation.messages.length - 1]
+                return (
+                  <div key={conversation.topic}>
+                    <div>{conversation.peerAddress}</div>
+                    <div>{latestMessage.content}</div>
+                  </div>
+                )
+              })}
+          </>
         </Card>
         <Card title="Subscribers management">
           <></>

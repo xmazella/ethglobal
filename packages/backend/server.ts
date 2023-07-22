@@ -19,6 +19,7 @@ import invariant from "tiny-invariant"
 import morgan from "morgan"
 import { Server } from "socket.io"
 import http from "http"
+import { initXmtp } from "./xmtp"
 
 const app: Express = express()
 const server = http.createServer(app)
@@ -99,9 +100,11 @@ function handlePostRequest(req: Request, res: Response) {
 
 io.on("connection", socket => {
   console.log("a user connected")
+  socket.on("request-init", () => {
+    console.debug("request init")
+    initXmtp(socket)
+  })
 })
-
-setInterval(() => io.emit("message-received"), 1000)
 
 // Check if .env is set
 const error = (varName: string) =>

@@ -2,9 +2,23 @@ import { useEffect, useState } from "react"
 import { io } from "socket.io-client"
 
 type Fetching = {
-  data: unknown
+  data: undefined | SimpleConversation[]
   error: unknown
   isLoading: boolean
+}
+
+type SimpleConversation = {
+  topic: string
+  createdAt: Date
+  peerAddress: string
+  messages: Array<SimpleMessage>
+}
+
+type SimpleMessage = {
+  senderAddress: string
+  sent: Date
+  content: string
+  contentTopic?: string
 }
 
 const initialState: Fetching = {
@@ -13,21 +27,37 @@ const initialState: Fetching = {
   isLoading: false,
 }
 
+const socket = io("http://localhost:3000")
+
 function useChat() {
-  console.debug("useChat")
-  const [state] = useState<Fetching>(initialState)
+  const [state, setState] = useState<Fetching>(initialState)
 
   useEffect(() => {
-    const socket = io("http://localhost:3000")
+    socket.emit("request-init")
 
-    socket.emit("connection")
+    setState({ data: undefined, isLoading: true, error: false })
 
-    socket.on("message-received", () => {
-      console.debug("a new message has been received")
+    socket.on("init", (conversations: SimpleConversation[]) => {
+      console.debug(conversations)
+      setState({ data: conversations, isLoading: false, error: false })
     })
 
-    // 3. Send event when sender want to send new messages
-  }, [])
+    socket.on("message-received", (m: SimpleMessage) => {
+      console.debug("a new message has been received", m)
+      const toUpdate = state.data?.find(c => c.peerAddress === m.senderAddress)
+      if (!toUpdate || !state.data) {
+        return console.error("No conversation mathcing sender addr")
+      }
+
+      toUpdate.messages = [...toUpdate.messages, m]
+      setState({ ...state, data: [...state.data] })
+    })
+
+    return () => {
+      socket.removeAllListeners("init")
+      socket.removeAllListeners("message-received")
+    }
+  }, [state])
 
   return state
 }
