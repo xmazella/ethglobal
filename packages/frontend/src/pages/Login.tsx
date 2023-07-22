@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 import {
   SismoConnectButton,
   SismoConnectConfig,
   // AuthType,
   // ClaimType,
   SismoConnectResponse,
-} from "@sismo-core/sismo-connect-react";
-import { styled } from "styled-components";
+} from "@sismo-core/sismo-connect-react"
+import { styled } from "styled-components"
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 
 const config: SismoConnectConfig = {
   appId: "0xafabec94b12842146d5f06acaac25ccd",
@@ -31,14 +31,14 @@ const config: SismoConnectConfig = {
   },
   // displayRawResponse: true, // this enables you to get access directly to the
   // Sismo Connect Response in the vault instead of redirecting back to the app
-};
+}
 
 const Main = styled.main`
   display: flex;
   justify-content: center;
   height: 100vh;
   background: linear-gradient(180deg, #131e1d 0%, #203635 100%);
-`;
+`
 
 const Svg = styled.div`
   width: 1400px;
@@ -47,7 +47,7 @@ const Svg = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   background-origin: center;
-`;
+`
 
 const SismoWrapper = styled.div`
   display: flex;
@@ -68,29 +68,29 @@ const SismoWrapper = styled.div`
     line-height: normal;
     letter-spacing: 0.4px;
   }
-`;
+`
 
 export default function Login() {
-  const [proofs, setProofs] = useState<SismoConnectResponse["proofs"]>();
-  const navigate = useNavigate();
+  const [proofs, setProofs] = useState<SismoConnectResponse["proofs"]>()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (proofs) {
-      localStorage.setItem("proofs", JSON.stringify(proofs));
-      navigate("/");
+      localStorage.setItem("proofs", JSON.stringify(proofs))
+      navigate("/")
     }
-  }, [proofs]);
+  }, [proofs])
 
   return (
     <Main>
       <Svg>
-        <Connect callback={(r) => setProofs(r.proofs)} />
+        <Connect callback={r => setProofs(r.proofs)} />
       </Svg>
     </Main>
-  );
+  )
 }
 
-type ConnectProps = { callback: (res: SismoConnectResponse) => any };
+type ConnectProps = { callback: (res: SismoConnectResponse) => any }
 const Connect = (props: ConnectProps) => (
   <SismoWrapper>
     <SismoConnectButton
@@ -116,4 +116,4 @@ const Connect = (props: ConnectProps) => (
       onResponse={props.callback}
     />
   </SismoWrapper>
-);
+)
