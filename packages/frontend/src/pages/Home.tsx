@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
-import { Column, createPost } from "../components/Tools";
+import { Column } from "../components/Tools";
 import LensFeed from "../components/LensFeed";
 import Card from "../components/Card";
-import { useState } from "react";
+import LensPost from "../components/LensPost";
 import useChat from "../hooks/useMessages";
 
 const HomeContainer = styled.div`
@@ -18,14 +18,6 @@ const HomeColumn = styled(Column)`
 `;
 
 const Home: React.FC<{}> = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
-  const onCreate = async () => {
-    setIsLoading(true);
-    await createPost("// TODO");
-    setIsLoading(false);
-  };
-
   const chat = useChat();
 
   return (
@@ -36,10 +28,7 @@ const Home: React.FC<{}> = () => {
           tricksColorTop="#162322"
           tricksColorBottom="#1a2929"
         >
-          <button onClick={onCreate}>
-            Post on lens
-            {isLoading && " ⏳"}
-          </button>
+          <LensPost />
         </Card>
         <Card title="Feed" tricksColorTop="#1a2b2a" tricksColorBottom="#1f3534">
           <LensFeed />
@@ -51,7 +40,6 @@ const Home: React.FC<{}> = () => {
           tricksColorTop="#162423"
           tricksColorBottom="#1a2929"
         >
-          <></>
           <>
             {chat.isLoading && <p>Chargement... ⏳</p>}
             {!chat.isLoading &&
