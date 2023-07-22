@@ -13,6 +13,7 @@ type SimpleMessage = {
   senderAddress: string
   sent: Date
   content: string
+  topic?: string
 }
 
 require("dotenv").config()
@@ -44,7 +45,7 @@ export async function initXmtp(socket: Socket) {
   for await (const message of await xmtp.conversations.streamAllMessages()) {
     console.debug(`[${message.senderAddress}]: ${message.content}`)
     socket.emit("message-received", <SimpleMessage>{
-      topic: message.contentTopic,
+      topic: message.conversation.topic,
       senderAddress: message.senderAddress,
       sent: message.sent,
       content: message.content,
