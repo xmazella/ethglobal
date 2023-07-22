@@ -32,9 +32,6 @@ const Xmtp: React.FC = () => {
             const latestMessage =
               conversation.messages[conversation.messages.length - 1]
 
-            // const name = await getOwnerName(conversation.peerAddress);
-
-            // console.log("conversation", conversation)
             return (
               <>
                 <div key={conversation.topic}>
