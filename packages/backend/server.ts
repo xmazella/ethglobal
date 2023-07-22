@@ -108,7 +108,13 @@ io.on("connection", socket => {
 // Check if .env is set
 const error = (varName: string) =>
   `No ${varName} found in env. Make sure you have a '.env' file set with PRIVATE KEY inside.`
-for (const envVar of ["PRIVATE_KEY", "MUMBAI_RPC_URL", "ETHERSCAN_API_KEY"]) {
+for (const envVar of [
+  "PRIVATE_KEY",
+  "MUMBAI_RPC_URL",
+  "ETHERSCAN_API_KEY",
+  "JSONBIN_PRIVATE_KEY",
+  "JSONBIN_ACCESS_KEY",
+]) {
   invariant(process.env[envVar], error(envVar))
 }
 
