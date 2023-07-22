@@ -1,5 +1,7 @@
 import useFeed from "../hooks/useFeed";
-
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import { styled } from "styled-components";
 import commentLogo from "../assets/svgs/commentLogo.svg";
 import hearthLogo from "../assets/svgs/hearthLogo.svg";
 import shareLogo from "../assets/svgs/shareLogo.svg";
@@ -11,7 +13,8 @@ import {
   isMediaSetFragment,
   sanitizeDStorageUrl,
 } from "./Tools";
-import { styled } from "styled-components";
+
+dayjs.extend(relativeTime);
 
 const Container = styled(Column)`
   margin-top: 20px;
@@ -70,14 +73,12 @@ const Hr = styled.hr`
 const LensFeed: React.FC = () => {
   const { data, isLoading, error } = useFeed();
 
-  if (isLoading) return <>Chargement...</>;
+  if (isLoading) return <>Loading... ⏳</>;
   if (error) return <>Oups c'est cassé 🥲</>;
 
   return (
     <Container>
-      {data?.items.map((i) => {
-        console.log(i.root);
-
+      {data?.items.map((i, n) => {
         const pfp = isMediaSetFragment(i.root.profile.picture)
           ? sanitizeDStorageUrl(i.root.profile.picture.original.url)
           : sanitizeDStorageUrl(
@@ -86,7 +87,7 @@ const LensFeed: React.FC = () => {
 
         return (
           <>
-            <Feed key={i.root.id}>
+            <Feed key={`${i.root.id}-${n}`}>
               <Row>
                 <ImgProfile src={pfp} />
                 <Profile>
@@ -94,7 +95,7 @@ const LensFeed: React.FC = () => {
                   <Row>
                     <TagName>@{i.root.profile.handle}</TagName>
                     <Dot>·</Dot>
-                    <Text>{i.root.createdAt}</Text>
+                    <Text>{dayjs(i.root.createdAt).fromNow()}</Text>
                   </Row>
                 </Profile>
               </Row>

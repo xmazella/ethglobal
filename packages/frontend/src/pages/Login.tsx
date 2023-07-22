@@ -1,13 +1,15 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   SismoConnectButton,
   SismoConnectConfig,
   AuthType,
   // ClaimType,
   SismoConnectResponse,
-} from "@sismo-core/sismo-connect-react"
-import useFeed from "../hooks/useFeed"
+} from "@sismo-core/sismo-connect-react";
+import useFeed from "../hooks/useFeed";
+import loginPage from "../assets/svgs/loginPage.svg";
+import { styled } from "styled-components";
 
 const config: SismoConnectConfig = {
   appId: "0xafabec94b12842146d5f06acaac25ccd",
@@ -30,28 +32,30 @@ const config: SismoConnectConfig = {
   },
   // displayRawResponse: true, // this enables you to get access directly to the
   // Sismo Connect Response in the vault instead of redirecting back to the app
-}
+};
+
+const Main = styled.main`
+  background: linear-gradient(180deg, #131e1d 0%, #203635 100%);
+`;
 
 export default function Login() {
-  const [proofs, setProofs] = useState<SismoConnectResponse["proofs"]>()
+  const [proofs, setProofs] = useState<SismoConnectResponse["proofs"]>();
 
   return (
-    <main>
-      <Link to="/">Accueil</Link>
-      <br />
+    <Main>
+      <img src={loginPage} />
       {proofs ? (
         <Success proofs={proofs} />
       ) : (
-        <Connect callback={r => setProofs(r.proofs)} />
+        <Connect callback={(r) => setProofs(r.proofs)} />
       )}
-    </main>
-  )
+    </Main>
+  );
 }
 
-type ConnectProps = { callback: (res: SismoConnectResponse) => any }
+type ConnectProps = { callback: (res: SismoConnectResponse) => any };
 const Connect = (props: ConnectProps) => (
   <>
-    <p>Connectez vous avec sismo pour commencer</p>
     <SismoConnectButton
       config={config}
       auths={[
@@ -85,9 +89,9 @@ const Connect = (props: ConnectProps) => (
       onResponse={props.callback}
     />
   </>
-)
+);
 
-type SuccessProps = { proofs: any[] }
+type SuccessProps = { proofs: any[] };
 const Success = (props: SuccessProps) => {
   return (
     <>
@@ -95,5 +99,5 @@ const Success = (props: SuccessProps) => {
       <br />
       <pre>{JSON.stringify(props.proofs, null, 2)}</pre>
     </>
-  )
-}
+  );
+};
