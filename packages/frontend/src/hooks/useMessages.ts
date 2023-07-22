@@ -57,7 +57,7 @@ function useChat() {
       socket.removeAllListeners("init")
       socket.removeAllListeners("message-received")
     }
-  }, [state])
+  }, [])
 
   return state
 }

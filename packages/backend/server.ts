@@ -101,7 +101,6 @@ function handlePostRequest(req: Request, res: Response) {
 io.on("connection", socket => {
   console.log("a user connected")
   socket.on("request-init", () => {
-    console.debug("request init")
     initXmtp(socket)
   })
 })
