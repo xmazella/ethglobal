@@ -6,6 +6,7 @@ import LensPost from "../components/LensPost";
 import Xmtp from "../components/Xmtp";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import RestrictedAccess from "../components/RestrictedAccess";
 
 const MainContainer = styled.div`
   background: linear-gradient(180deg, #131e1d 0%, #203635 100%);
@@ -60,14 +61,14 @@ const Home: React.FC<{}> = () => {
             tricksColorTop="#1a2b2a"
             tricksColorBottom="#1c2e2e"
           >
-            <></>
+            <RestrictedAccess />
           </Card>
           <Card
             title="Account settings"
             tricksColorTop="#1d312f"
             tricksColorBottom="#203634"
           >
-            <></>
+            <RestrictedAccess />
           </Card>
         </HomeColumn>
       </HomeContainer>
