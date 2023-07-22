@@ -54,8 +54,7 @@ const Home: React.FC<{}> = () => {
             tricksColorTop="#162423"
             tricksColorBottom="#1a2929"
           >
-            <></>
-            {/* <Xmtp /> */}
+            <Xmtp />
           </Card>
           <Card
             title="Subscribers management"
