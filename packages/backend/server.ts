@@ -16,10 +16,12 @@ import { getFeed } from "./feed"
 import cors from "cors"
 import { postOnLens } from "./post"
 import invariant from "tiny-invariant"
+import morgan from "morgan"
 
 const app: Express = express()
 
 app.use(cors())
+app.use(morgan("dev"))
 
 const config: SismoConnectConfig = {
   // you will need to register an appId in the Factory

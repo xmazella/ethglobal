@@ -28,6 +28,5 @@ export async function getFeed(req: Request, res: Response) {
     profileId: "0x8b39",
   })
 
-  console.debug("GET /feed ", new Date().toString())
   res.status(200).json({ data: data })
 }
