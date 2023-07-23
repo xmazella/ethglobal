@@ -5,11 +5,17 @@ import { styled } from "styled-components";
 import useChat from "../hooks/useMessages";
 import Address from "./Address";
 import EnsImage from "./EnsImage";
+import { Controls, Player } from "@lottiefiles/react-lottie-player";
+import loader from "../assets/loader.json";
+import { useState } from "react";
 dayjs.extend(relativeTime);
 
 const Container = styled(Column)`
+  display: flex;
+  justify-content: center;
   margin-top: 20px;
   gap: 20px;
+  padding-top: 20px;
   height: 229px;
 `;
 
@@ -20,8 +26,9 @@ const Hr = styled.div`
 `;
 
 const Message = styled.div`
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  width: 100%;
+  padding-left: 56px;
   gap: 20px;
 `;
 
@@ -45,38 +52,65 @@ const Dot = styled(Text)`
   margin: 0 4px;
 `;
 
+const XmtpWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
 const Xmtp: React.FC = () => {
   const chat = useChat();
 
-  if (chat.isLoading) {
-    return <Container>Loading... ⏳</Container>;
-  }
+  const [isAnimationFinished, setIsAnimationFinished] =
+    useState<boolean>(false);
+
+  if (!isAnimationFinished && chat.isLoading)
+    return (
+      <Container>
+        <Player
+          loop
+          autoplay
+          onEvent={(event) => {
+            if (event === "complete") {
+              setIsAnimationFinished(true);
+            }
+          }}
+          src={loader}
+          style={{ height: "320px", width: "320px" }}
+        >
+          <Controls
+            visible={true}
+            buttons={["play", "repeat", "frame", "debug"]}
+          />
+        </Player>
+      </Container>
+    );
 
   return (
     <Container>
       <>
         {!chat.isLoading &&
-          // TODO: order by most recent conversation
           chat.data?.map((conversation) => {
             const latestMessage =
               conversation.messages[conversation.messages.length - 1];
 
             return (
-              <Message key={conversation.topic}>
-                <Gap>
-                  <Profile>
+              <XmtpWrapper key={conversation.topic}>
+                <Message>
+                  <Gap>
                     <EnsImage address={conversation.peerAddress} />
-
-                    <TagName>
-                      @<Address address={conversation.peerAddress} />
-                    </TagName>
-                    <Dot>·</Dot>
-                    <Text>{dayjs(conversation.createdAt).fromNow()}</Text>
-                  </Profile>
-                  <Text>{latestMessage.content}</Text>
-                </Gap>
+                    <Profile>
+                      <TagName>
+                        @<Address address={conversation.peerAddress} />
+                      </TagName>
+                      <Dot>·</Dot>
+                      <Text>{dayjs(conversation.createdAt).fromNow()}</Text>
+                    </Profile>
+                    <Text>{latestMessage.content}</Text>
+                  </Gap>
+                </Message>
                 <Hr />
-              </Message>
+              </XmtpWrapper>
             );
           })}
       </>

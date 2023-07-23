@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import useFeed from "../hooks/useFeed";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -13,10 +14,14 @@ import {
   isMediaSetFragment,
   sanitizeDStorageUrl,
 } from "./Tools";
+import { Player, Controls } from "@lottiefiles/react-lottie-player";
+import { useState } from "react";
+import loader from "../assets/loader.json";
 
 dayjs.extend(relativeTime);
 
 const Container = styled(Column)`
+  height: 100%;
   margin-top: 20px;
   margin-bottom: 20px;
   gap: 20px;
@@ -79,8 +84,30 @@ const FeedWrapper = styled.div`
 
 const LensFeed: React.FC = () => {
   const { data, isLoading, error } = useFeed();
+  const [isAnimationFinished, setIsAnimationFinished] =
+    useState<boolean>(false);
 
-  if (isLoading) return <>Loading... ⏳</>;
+  if (!isAnimationFinished && !isLoading)
+    return (
+      <Container>
+        <Player
+          autoplay
+          onEvent={(event) => {
+            if (event === "complete") {
+              setIsAnimationFinished(true);
+            }
+          }}
+          src={loader}
+          style={{ height: "300px", width: "300px" }}
+        >
+          <Controls
+            visible={true}
+            buttons={["play", "repeat", "frame", "debug"]}
+          />
+        </Player>
+      </Container>
+    );
+
   if (error) return <>Oups c'est cassé 🥲</>;
 
   return (

@@ -6,7 +6,7 @@ import graphicCardHeader from "../assets/svgs/graphicCardHeader.svg";
 
 export const CardContainer = styled(Column)`
   position: relative;
-  max-height: 400px;
+  max-height: 354px;
   width: calc(100% - 48px);
   padding: 20px 24px;
   background: linear-gradient(

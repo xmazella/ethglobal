@@ -12,6 +12,7 @@
   "dependencies": {
     "@ethersproject/providers": "^5.7.2",
     "@lens-protocol/client": "^1.2.0",
+    "@lottiefiles/react-lottie-player": "^3.5.3",
     "@sismo-core/sismo-connect-react": "^0.0.20",
     "@types/socket.io": "^3.0.2",
     "@types/socket.io-client": "^3.0.0",

@@ -110,7 +110,7 @@ const Header: React.FC<{}> = () => {
         <Logo>
           <img src={asapLogo} />
         </Logo>
-        <Logout>Log out</Logout>
+        <Logout onClick={logout}>Log out</Logout>
       </LogoContainer>
       <Content>
         <Profile>

@@ -2,6 +2,7 @@ import { JsonRpcProvider } from "ethers";
 import { useEffect, useState } from "react";
 import { sanitizeDStorageUrl } from "./Tools";
 import { styled } from "styled-components";
+import glasses from "/src/assets/glasses.jpeg";
 
 const ImgProfile = styled.img`
   position: absolute;
@@ -33,7 +34,7 @@ export default function EnsImage(props: AddressProps) {
 
         if (ipfsHash) {
           setEnsImgUrl(sanitizeDStorageUrl(`${ipfsHash}`));
-        }
+        } else setEnsImgUrl(glasses);
       }
     };
 
