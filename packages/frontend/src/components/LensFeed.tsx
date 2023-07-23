@@ -66,8 +66,15 @@ const Dot = styled(Text)`
 `;
 
 const Hr = styled.hr`
+  margin: 0;
   width: 100%;
   border: 1px solid #b7fffa;
+`;
+
+const FeedWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;
 
 const LensFeed: React.FC = () => {
@@ -86,8 +93,8 @@ const LensFeed: React.FC = () => {
             );
 
         return (
-          <>
-            <Feed key={`${i.root.id}-${n}`}>
+          <FeedWrapper key={`${i.root.id}-${n}`}>
+            <Feed>
               <Row>
                 <ImgProfile src={pfp} />
                 <Profile>
@@ -108,7 +115,7 @@ const LensFeed: React.FC = () => {
               </IconContainer>
             </Feed>
             <Hr />
-          </>
+          </FeedWrapper>
         );
       })}
     </Container>
