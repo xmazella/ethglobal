@@ -98,7 +98,7 @@ const LensFeed: React.FC = () => {
             }
           }}
           src={loader}
-          style={{ height: "300px", width: "300px" }}
+          style={{ height: "330px", width: "300px" }}
         >
           <Controls
             visible={true}

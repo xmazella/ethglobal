@@ -17,6 +17,7 @@ const Container = styled(Column)`
   gap: 20px;
   padding-top: 20px;
   height: 229px;
+  width: 100%:
 `;
 
 const Hr = styled.div`
@@ -76,7 +77,7 @@ const Xmtp: React.FC = () => {
             }
           }}
           src={loader}
-          style={{ height: "320px", width: "320px" }}
+          style={{ height: "300px", width: "300px" }}
         >
           <Controls
             visible={true}
