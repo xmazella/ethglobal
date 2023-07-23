@@ -1,7 +1,7 @@
 import {
   SismoConnectButton,
   SismoConnectConfig,
-  // AuthType,
+  AuthType,
   // ClaimType,
   SismoConnectResponse,
 } from "@sismo-core/sismo-connect-react"
@@ -63,6 +63,7 @@ export default function Login() {
 
   const onSuccess = async (s: SismoConnectResponse) => {
     try {
+      console.debug({ s })
       const { data } = await axios.post<ApiResponse>(
         "http://localhost:3000/login",
         s
@@ -90,6 +91,7 @@ const Connect = (props: ConnectProps) => (
   <SismoWrapper>
     <SismoConnectButton
       config={config}
+      auth={{ authType: AuthType.VAULT }}
       claims={[
         { groupId: "0x75e135ba6f62b00a7ae194920ff8a665" }, // basique
         { groupId: "0x078b5d9514580634859c634c9f9dff4f", isOptional: true }, // xmtp

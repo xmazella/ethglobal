@@ -1,33 +1,38 @@
-import { styled } from "styled-components";
-import { Column } from "../components/Tools";
-import LensFeed from "../components/LensFeed";
-import Card from "../components/Card";
-import LensPost from "../components/LensPost";
-import Xmtp from "../components/Xmtp";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import RestrictedAccess from "../components/RestrictedAccess";
+import { styled } from "styled-components"
+import { Column } from "../components/Tools"
+import LensFeed from "../components/LensFeed"
+import Card from "../components/Card"
+import LensPost from "../components/LensPost"
+import Xmtp from "../components/Xmtp"
+import Footer from "../components/Footer"
+import Header from "../components/Header"
+import RestrictedAccess from "../components/RestrictedAccess"
+import { useNavigate } from "react-router"
 
 const MainContainer = styled.div`
   background: linear-gradient(180deg, #131e1d 0%, #203635 100%);
   padding: 20px 40px 0 40px;
   min-height: calc(100vh - 20px);
   margin: 0;
-`;
+`
 
 const HomeContainer = styled.div`
   display: flex;
   padding-top: 62px;
   gap: 32px;
-`;
+`
 
 const HomeColumn = styled(Column)`
   align-items: center;
   width: 50%;
   gap: 36px;
-`;
+`
 
 const Home: React.FC<{}> = () => {
+  const permission = JSON.parse(localStorage.getItem("permissions") || "{}")
+  console.debug(permission)
+  console.debug(localStorage.getItem("permissions"))
+
   return (
     <MainContainer>
       <Header />
@@ -38,7 +43,7 @@ const Home: React.FC<{}> = () => {
             tricksColorTop="#162322"
             tricksColorBottom="#1a2929"
           >
-            <LensPost />
+            {permission.postOnlens ? <LensPost /> : <RestrictedAccess />}
           </Card>
           <Card
             title="Feed"
@@ -54,7 +59,7 @@ const Home: React.FC<{}> = () => {
             tricksColorTop="#162423"
             tricksColorBottom="#1a2929"
           >
-            <Xmtp />
+            {permission.xmtp ? <Xmtp /> : <RestrictedAccess />}
           </Card>
           <Card
             title="Subscribers management"
@@ -74,7 +79,7 @@ const Home: React.FC<{}> = () => {
       </HomeContainer>
       <Footer />
     </MainContainer>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

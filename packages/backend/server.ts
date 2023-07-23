@@ -31,6 +31,15 @@ const io = new Server(server, {
   },
 })
 
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "YOUR-DOMAIN.TLD") // update to match the domain you will make the request from
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  )
+  next()
+})
+
 app.use(cors())
 app.use(morgan("dev"))
 
@@ -83,6 +92,7 @@ app.post("/quote", (req: Request, res: Response) => {
 
 app.get("/feed", getFeed)
 app.post("/postOnLens", postOnLens)
+
 app.post("/login", login)
 
 function handlePostRequest(req: Request, res: Response) {
