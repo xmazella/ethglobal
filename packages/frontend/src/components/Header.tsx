@@ -1,26 +1,27 @@
-"use client";
+"use client"
 
-import { styled } from "styled-components";
-import graphicUser from "../assets/svgs/graphicUser.svg";
-import lensLogo from "../assets/svgs/lensLogo.svg";
-import twitterLogo from "../assets/svgs/twitterLogo.svg";
-import notificationLogo from "../assets/svgs/notificationLogo.svg";
-import { Text } from "./Tools";
+import { styled } from "styled-components"
+import graphicUser from "../assets/svgs/graphicUser.svg"
+import lensLogo from "../assets/svgs/lensLogo.svg"
+import twitterLogo from "../assets/svgs/twitterLogo.svg"
+import notificationLogo from "../assets/svgs/notificationLogo.svg"
+import { Text } from "./Tools"
+import { useNavigate } from "react-router"
 
 const HeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 140px;
-`;
+`
 
 const LogoContainer = styled.div`
   display: flex;
-`;
+`
 
 const Flex1 = styled.div`
   flex: 1;
-`;
+`
 
 const Logo = styled.div`
   flex: 3;
@@ -31,21 +32,21 @@ const Logo = styled.div`
   font-weight: 800;
   line-height: normal;
   text-align: center;
-`;
+`
 
 const Content = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
-`;
+`
 
 const Menu = styled.div`
   display: flex;
   flex: 3;
   justify-content: center;
   gap: 32px;
-`;
+`
 
 const Profile = styled.div`
   display: flex;
@@ -53,7 +54,7 @@ const Profile = styled.div`
   width: 100%;
   align-items: center;
   gap: 32px;
-`;
+`
 
 const Company = styled.div`
   position: absolute;
@@ -66,7 +67,7 @@ const Company = styled.div`
   font-style: normal;
   font-weight: 800;
   line-height: normal;
-`;
+`
 
 const Circle = styled.div`
   width: 60px;
@@ -75,7 +76,7 @@ const Circle = styled.div`
   border-radius: 50%;
   background: #ffffff;
   content: "";
-`;
+`
 
 const Logout = styled(Text)`
   display: flex;
@@ -86,21 +87,27 @@ const Logout = styled(Text)`
   font-weight: 500;
   letter-spacing: 0.36px;
   text-decoration-line: underline;
-`;
+`
 
 const Notification = styled.div`
   display: flex;
   justify-content: flex-end;
   flex: 1;
-`;
+`
 
 const Header: React.FC<{}> = () => {
+  const navigate = useNavigate()
+  const logout = () => {
+    localStorage.removeItem("permissions")
+    localStorage.removeItem("sismoConnectResponse")
+    navigate("/login")
+  }
   return (
     <HeaderContainer>
       <LogoContainer>
         <Flex1></Flex1>
         <Logo>ETH GLOBAL</Logo>
-        <Logout>Log out</Logout>
+        <Logout onClick={logout}>Log out</Logout>
       </LogoContainer>
       <Content>
         <Profile>
@@ -117,7 +124,7 @@ const Header: React.FC<{}> = () => {
         </Notification>
       </Content>
     </HeaderContainer>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header
